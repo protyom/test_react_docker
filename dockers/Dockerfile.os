@@ -25,4 +25,5 @@ RUN apk add --no-cache \
     supervisor \
     linux-headers \
     mc
+RUN apk add --update nodejs npm
 RUN pip3 install uwsgi
