@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button'
 import {Col, Container, Image, Row} from "react-bootstrap";
 import image from 'base.png';
 import logo from 'logo.png';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './login.sass';
 
 
 const sectionStyle = {
@@ -22,11 +24,11 @@ const containerStyle = {
     minHeight: `100%`,
 };
 
-const buttonStyle = {
-    borderRadius:                    0,
-    backgroundColor: `#ff7b00`,
-    borderColor: `#ff7b00`,
-};
+// const buttonStyle = {
+//     borderRadius:                    0,
+//     backgroundColor: `#ff7b00`,
+//     borderColor: `#ff7b00`,
+// };
 
 const VerticalStyle= {
     minHeight: `100vh`,
@@ -49,7 +51,7 @@ const logoStyle = {
 class LoginForm extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {username: 'admin', password: 'qweqweqweQ1'};
+        this.state = {username: 'admin', password: 'qweqweqweQ1', enabled: true};
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -59,23 +61,17 @@ class LoginForm extends React.Component {
         const name = event.target.name;
         const value = event.target.value;
         this.setState({[name]: value});
+        this.setState({enabled: this.state.password.length > 0 && this.state.username.length > 0})
     }
 
     async handleSubmit(event) {
         event.preventDefault();
-        // axios.post('http://localhost/api/token/', {
-        //     client_id: 'tgA2ww6Vtt6ztqpqoyMtijZGbNuoupwVD7lYmPiC',
-        //     client_secret: 'Do4fshsPrd7Iqe4IjAoL8raZppxmW733R5scrHZtlBxxkQLdRU50nUnWcPCaksBNfRU8AqkeoZFOPI6ocabZWKYPWkthGFNzKWVpHIyxGMfVnHt9nITNK68GDVZOV5bR',
-        //     grant_type: 'password', ...this.state
-        // }).then(function (response){
-        //     console.log('👉 New token:', response.data.access_token);
-        // }).catch(function (response) {
-        //     console.log("Choto ne tak");
-        // });
+        const {setUser} = this.props;
+        setUser(this.state.username, this.state.password);
     }
 
     render() {
-        const {setUser} = this.props;
+
         return (
             <div style={sectionStyle}>
                 <Container style={containerStyle}>
@@ -86,14 +82,14 @@ class LoginForm extends React.Component {
                                     <img src={logo} style={logoStyle}/>
                                     <Form.Group controlId="formBasicEmail">
                                         <Form.Label>Идентификационный номер</Form.Label>
-                                        <Form.Control value={this.state.username} onChange={this.handleChange} />
+                                        <Form.Control value={this.state.username} name="username" onChange={this.handleChange} />
                                     </Form.Group>
 
                                     <Form.Group controlId="formBasicPassword">
                                         <Form.Label>Пароль</Form.Label>
-                                        <Form.Control type="password" value={this.state.password} onChange={this.handleChange}/>
+                                        <Form.Control type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
                                     </Form.Group>
-                                    <Button variant="primary" type="submit" style={buttonStyle} onClick={this.handleSubmit}>
+                                    <Button variant={this.state.enabled ? "primary" : "secondary"} type="submit" onClick={this.handleSubmit} disabled={!this.state.enabled}>
                                         Войти
                                     </Button>
                                 </Form>
