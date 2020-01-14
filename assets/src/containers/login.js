@@ -4,8 +4,9 @@ import {mapDispatchToProps, mapStateToProps} from "../store/login/commands";
 import { connect } from "react-redux";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import {Col, Container, Row} from "react-bootstrap";
+import {Col, Container, Image, Row} from "react-bootstrap";
 import image from 'base.png';
+import logo from 'logo.png';
 
 
 const sectionStyle = {
@@ -27,8 +28,22 @@ const buttonStyle = {
     borderColor: `#ff7b00`,
 };
 
-const FormStyle= {
-    alignItems: `center`,
+const VerticalStyle= {
+    minHeight: `100vh`,
+
+    display: 'flex',
+
+
+    alignItems : `center`,
+    width: `100%`,
+};
+
+const FormStyle = {
+    width: `100%`,
+};
+
+const logoStyle = {
+    paddingBottom: `72px`,
 };
 
 class LoginForm extends React.Component {
@@ -65,21 +80,24 @@ class LoginForm extends React.Component {
             <div style={sectionStyle}>
                 <Container style={containerStyle}>
                     <Row style={containerStyle}>
-                        <Col md={{ span: 5, offset: 7 }} style={{FormStyle}}>
-                            <Form style={containerStyle}>
-                                <Form.Group controlId="formBasicEmail">
-                                    <Form.Label>Идентификационный номер</Form.Label>
-                                    <Form.Control type="email" value={this.state.username} onChange={this.handleChange} />
-                                </Form.Group>
+                        <Col md={{ span: 5, offset: 7 }} style={containerStyle}>
+                            <div style={VerticalStyle}>
+                                <Form style={FormStyle}>
+                                    <img src={logo} style={logoStyle}/>
+                                    <Form.Group controlId="formBasicEmail">
+                                        <Form.Label>Идентификационный номер</Form.Label>
+                                        <Form.Control value={this.state.username} onChange={this.handleChange} />
+                                    </Form.Group>
 
-                                <Form.Group controlId="formBasicPassword">
-                                    <Form.Label>Пароль</Form.Label>
-                                    <Form.Control type="password" value={this.state.password} onChange={this.handleChange}/>
-                                </Form.Group>
-                                <Button variant="primary" type="submit" style={buttonStyle}>
-                                    Войти
-                                </Button>
-                            </Form>
+                                    <Form.Group controlId="formBasicPassword">
+                                        <Form.Label>Пароль</Form.Label>
+                                        <Form.Control type="password" value={this.state.password} onChange={this.handleChange}/>
+                                    </Form.Group>
+                                    <Button variant="primary" type="submit" style={buttonStyle} onClick={this.handleSubmit}>
+                                        Войти
+                                    </Button>
+                                </Form>
+                            </div>
                         </Col>
                     </Row>
                 </Container>
