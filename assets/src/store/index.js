@@ -7,4 +7,4 @@ const rootReducer = () =>
         user,
     });
 
-export default rootReducer();
+export default rootReducer;
